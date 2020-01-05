@@ -85,13 +85,6 @@ public class Knight extends Hero implements Modificator {
                         getHp()));
             }
             victim.setHp(0);
-            /*int xp = aggressor.getXp();
-            xp = xp + Math.max(0, GeneralConstants.STANDARD_ADDED_XP - (aggressor.getLevel()
-                    - victim.getLevel()) * GeneralConstants.MODIFIED_ADDED_XP);
-            aggressor.setXp(xp);
-            levelUp(aggressor);
-            aggressor.setHp(GeneralConstants.INITIAL_HP_KNIGHT + aggressor.getLevel()
-                    * GeneralConstants.ADDED_HP_KNIGHT);*/
             aggressor.calculateXp(aggressor, victim);
             aggressor.calculateHp(aggressor);
             return;
