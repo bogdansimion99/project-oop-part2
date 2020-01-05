@@ -4,7 +4,14 @@ import helpers.WizardConstants;
 import heroes.Wizard;
 
 public class WizardLowStrategy implements WizardStrategy {
+    private static WizardLowStrategy instance = null;
 
+    public static WizardLowStrategy getInstance() {
+        if (instance == null) {
+            instance = new WizardLowStrategy();
+        }
+        return instance;
+    }
     /**
      * @param wizard
      */

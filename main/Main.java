@@ -81,6 +81,11 @@ public final class Main {
             fs.writeWord(" ~~");
             fs.writeNewLine();
             for (int j = 0; j < noHeroes; j++) {
+                if (heroes.get(j).getOvertime() == 0) {
+                    heroes.get(j).chooseStrategy(heroes.get(j));
+                }
+            }
+            for (int j = 0; j < noHeroes; j++) {
                 if (heroes.get(j).getHp() <= 0) {
                     continue;
                 }

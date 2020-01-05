@@ -1,11 +1,9 @@
 package heroes;
 
-import helpers.GeneralConstants;
-import helpers.Modificator;
-import helpers.ModificatorVisitor;
-import helpers.PyromancerConstants;
-import helpers.Append;
+import helpers.*;
 import maps.Map;
+import strategies.PyromancerHighStrategy;
+import strategies.PyromancerLowStrategy;
 
 public class Pyromancer extends Hero implements Modificator {
     private Hero pyromancer;
@@ -79,14 +77,15 @@ public class Pyromancer extends Hero implements Modificator {
                 * aggressor.getLevel();
         if (area.getType().equals("Volcanic")) {
             hp = hp * area.getModificator();
+            hp = Math.round(hp);
         }
-        if (victim instanceof Wizard) {
+        if (victim.getType().equals("Wizard")) {
             ((Wizard) victim).setDamage(((Wizard) victim).getDamage() + Math.round(hp));
         }
         float[] modificators = {Rogue.Constants.MODIFICATOR_FIREBLAST, Knight.Constants.
                 MODIFICATOR_FIREBLAST, Constants.MODIFICATOR_FIREBLAST, Wizard.Constants.
                 MODIFICATOR_FIREBLAST};
-        hp = hp * victim.accept(new Append(), modificators);
+        hp = hp * victim.accept(new Append(), modificators) * (1 + aggressor.getModificators());
         victim.setHp(victim.getHp() - Math.round(hp));
     }
 
@@ -101,6 +100,7 @@ public class Pyromancer extends Hero implements Modificator {
                 * aggressor.getLevel();
         if (area.getType().equals("Volcanic")) {
             hp = hp * area.getModificator();
+            hp = Math.round(hp);
         }
         if (victim.getType().equals("Wizard")) {
             ((Wizard) victim).setDamage(((Wizard) victim).getDamage() + Math.round(hp));
@@ -108,7 +108,7 @@ public class Pyromancer extends Hero implements Modificator {
         float[] modificators = {Rogue.Constants.MODIFICATOR_IGNITE, Knight.Constants.
                 MODIFICATOR_IGNITE, Constants.MODIFICATOR_IGNITE, Wizard.Constants.
                 MODIFICATOR_IGNITE};
-        hp = hp * victim.accept(new Append(), modificators);
+        hp = hp * victim.accept(new Append(), modificators) * (1 + aggressor.getModificators());
         victim.setDamageOvertime(PyromancerConstants.BASE_DAMAGE_PER_ROUND_IGNITE
                 + PyromancerConstants.ADDED_DAMAGE_PER_ROUND_IGNITE * aggressor.getLevel());
         victim.setHp(victim.getHp() - Math.round(hp));
@@ -140,7 +140,20 @@ public class Pyromancer extends Hero implements Modificator {
     public void calculateHp(final Hero aggressor) {
         aggressor.setHp(GeneralConstants.INITIAL_HP_PYROMANCER + aggressor.getLevel()
                 * GeneralConstants.ADDED_HP_PYROMANCER);
-        aggressor.setMaximumHp(GeneralConstants.INITIAL_HP_PYROMANCER + aggressor.getLevel()
-                * GeneralConstants.ADDED_HP_PYROMANCER);
+        aggressor.setMaximumHp(aggressor.getHp());
+    }
+
+    /**
+     * @param hero
+     */
+    @Override
+    public void chooseStrategy (final Hero hero) {
+        if (hero.getHp() <= 0) {
+            return;
+        } else if (hero.getHp() < PyromancerConstants.HP_LIMIT_LOW_FACTOR * hero.getMaximumHp()) {
+            PyromancerLowStrategy.getInstance().pyromancerStrategy((Pyromancer) hero);
+        } else if (hero.getHp() < PyromancerConstants.HP_LIMIT_HIGH_FACTOR * hero.getMaximumHp()) {
+            PyromancerHighStrategy.getInstance().pyromancerStrategy((Pyromancer) hero);
+        }
     }
 }

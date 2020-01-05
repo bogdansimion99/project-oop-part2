@@ -4,7 +4,14 @@ import helpers.RogueConstants;
 import heroes.Rogue;
 
 public class RogueLowStrategy implements RogueStrategy {
+    private static RogueLowStrategy instance = null;
 
+    public static RogueLowStrategy getInstance() {
+        if (instance == null) {
+            instance = new RogueLowStrategy();
+        }
+        return instance;
+    }
     /**
      * @param rogue
      */

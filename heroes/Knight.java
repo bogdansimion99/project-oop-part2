@@ -6,6 +6,8 @@ import helpers.Modificator;
 import helpers.ModificatorVisitor;
 import helpers.Append;
 import maps.Map;
+import strategies.KnightHighStrategy;
+import strategies.KnightLowStrategy;
 
 public class Knight extends Hero implements Modificator {
     private Hero knight;
@@ -78,19 +80,20 @@ public class Knight extends Hero implements Modificator {
         if (victim.getHp() < victim.getMaximumHp() * Math.min(KnightConstants.INITIAL_HP_LIMIT
                 + KnightConstants.ADDED_HP_LIMIT * aggressor.getLevel(), KnightConstants.
                 MAXIMUM_HP_LIMIT)) {
-            // trebuie sa rezolv instanceof
             if (victim.getType().equals("Wizard")) {
                 ((Wizard) victim).setDamage(((Wizard) victim).getDamage() + Math.round(victim.
                         getHp()));
             }
             victim.setHp(0);
-            int xp = aggressor.getXp();
+            /*int xp = aggressor.getXp();
             xp = xp + Math.max(0, GeneralConstants.STANDARD_ADDED_XP - (aggressor.getLevel()
                     - victim.getLevel()) * GeneralConstants.MODIFIED_ADDED_XP);
             aggressor.setXp(xp);
             levelUp(aggressor);
             aggressor.setHp(GeneralConstants.INITIAL_HP_KNIGHT + aggressor.getLevel()
-                    * GeneralConstants.ADDED_HP_KNIGHT);
+                    * GeneralConstants.ADDED_HP_KNIGHT);*/
+            aggressor.calculateXp(aggressor, victim);
+            aggressor.calculateHp(aggressor);
             return;
         }
         float hp = 0;
@@ -98,6 +101,7 @@ public class Knight extends Hero implements Modificator {
                 * aggressor.getLevel();
         if (area.getType().equals("Land")) {
             hp = hp * area.getModificator();
+            hp = Math.round(hp);
         }
         if (victim.getType().equals("Wizard")) {
             ((Wizard) victim).setDamage(((Wizard) victim).getDamage() + Math.round(hp));
@@ -105,7 +109,7 @@ public class Knight extends Hero implements Modificator {
         float[] modificators = {Rogue.Constants.MODIFICATOR_EXECUTE, Knight.Constants.
                 MODIFICATOR_EXECUTE, Pyromancer.Constants.MODIFICATOR_EXECUTE, Wizard.Constants.
                 MODIFICATOR_EXECUTE};
-        hp = hp * victim.accept(new Append(), modificators);
+        hp = hp * victim.accept(new Append(), modificators) * (1 + aggressor.getModificators());
         victim.setHp(victim.getHp() - Math.round(hp));
     }
 
@@ -115,11 +119,15 @@ public class Knight extends Hero implements Modificator {
      * @param area
      */
     public void slam(final Hero aggressor, final Hero victim, final Map area) {
+        if (victim.getHp() <= 0) {
+            return;
+        }
         float hp = 0;
         hp = KnightConstants.BASE_DAMAGE_SLAM + KnightConstants.ADDED_DAMAGE_SLAM
                 * aggressor.getLevel();
         if (area.getType().equals("Land")) {
             hp = hp * area.getModificator();
+            hp = Math.round(hp);
         }
         if (victim.getType().equals("Wizard")) {
             ((Wizard) victim).setDamage(((Wizard) victim).getDamage() + Math.round(hp));
@@ -127,7 +135,7 @@ public class Knight extends Hero implements Modificator {
         float[] modificators = {Rogue.Constants.MODIFICATOR_SLAM, Knight.Constants.
                 MODIFICATOR_SLAM, Pyromancer.Constants.MODIFICATOR_SLAM, Wizard.Constants.
                 MODIFICATOR_SLAM};
-        hp = hp * victim.accept(new Append(), modificators);
+        hp = hp * victim.accept(new Append(), modificators) * (1 + aggressor.getModificators());
         victim.setOvertime(KnightConstants.NO_ROUND_PARALYSIS);
         victim.setDamageOvertime(0);
         victim.setHp(victim.getHp() - Math.round(hp));
@@ -138,6 +146,7 @@ public class Knight extends Hero implements Modificator {
      * @param victim
      * Modifica nivelul jucatorului doar daca victima a murit.
      */
+    @Override
     public void calculateXp(final Hero aggressor, final Hero victim) {
         if (victim.getHp() <= 0) {
             victim.setHp(0);
@@ -156,10 +165,24 @@ public class Knight extends Hero implements Modificator {
     /**
      * @param aggressor
      */
+    @Override
     public void calculateHp(final Hero aggressor) {
         aggressor.setHp(GeneralConstants.INITIAL_HP_KNIGHT + aggressor.getLevel()
                 * GeneralConstants.ADDED_HP_KNIGHT);
-        aggressor.setMaximumHp(GeneralConstants.INITIAL_HP_KNIGHT + aggressor.getLevel()
-                * GeneralConstants.ADDED_HP_KNIGHT);
+        aggressor.setMaximumHp(aggressor.getHp());
+    }
+
+    /**
+     * @param hero
+     */
+    @Override
+    public void chooseStrategy (final Hero hero) {
+        if (hero.getHp() <= 0) {
+            return;
+        } else if (hero.getHp() < KnightConstants.HP_LIMIT_LOW_FACTOR * hero.getMaximumHp()) {
+            KnightLowStrategy.getInstance().knightStrategy((Knight) hero);
+        } else if (hero.getHp() < KnightConstants.HP_LIMIT_HIGH_FACTOR * hero.getMaximumHp()) {
+            KnightHighStrategy.getInstance().knightStrategy((Knight) hero);
+        }
     }
 }

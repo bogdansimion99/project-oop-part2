@@ -2,6 +2,8 @@ package heroes;
 
 import helpers.*;
 import maps.Map;
+import strategies.WizardHighStrategy;
+import strategies.WizardLowStrategy;
 
 public class Wizard extends Hero implements Modificator {
     private Hero wizard;
@@ -92,10 +94,12 @@ public class Wizard extends Hero implements Modificator {
         float[] modificators = {Rogue.Constants.MODIFICATOR_DRAIN, Knight.Constants.
                 MODIFICATOR_DRAIN, Pyromancer.Constants.MODIFICATOR_DRAIN, Constants.
                 MODIFICATOR_DRAIN};
-        procent = procent * victim.accept(new Append(), modificators);
-        hp = hp * procent;
+        procent = procent * victim.accept(new Append(), modificators) * (1 + aggressor.
+                getModificators());
+        hp = Math.round(hp * procent);
         if (area.getType().equals("Desert")) {
             hp = hp * GeneralConstants.DESERT_MODIFICATOR;
+            hp = Math.round(hp);
         }
         victim.setHp(victim.getHp() - Math.round(hp));
     }
@@ -114,11 +118,12 @@ public class Wizard extends Hero implements Modificator {
         hp = hp * procent;
         if (area.getType().equals("Desert")) {
             hp = hp * GeneralConstants.DESERT_MODIFICATOR;
+            hp = Math.round(hp);
         }
         float[] modificators = {Rogue.Constants.MODIFICATOR_DEFLECT, Knight.Constants.
                 MODIFICATOR_DEFLECT, Pyromancer.Constants.MODIFICATOR_DEFLECT, Constants.
                 MODIFICATOR_DEFLECT};
-        hp = hp * victim.accept(new Append(), modificators);
+        hp = hp * victim.accept(new Append(), modificators) * (1 + aggressor.getModificators());
         victim.setHp(victim.getHp() - Math.round(hp));
     }
 
@@ -149,7 +154,20 @@ public class Wizard extends Hero implements Modificator {
     public void calculateHp(final Hero aggressor) {
         aggressor.setHp(GeneralConstants.INITIAL_HP_WIZARD + aggressor.getLevel()
                 * GeneralConstants.ADDED_HP_WIZARD);
-        aggressor.setMaximumHp(GeneralConstants.INITIAL_HP_WIZARD + aggressor.getLevel()
-                * GeneralConstants.ADDED_HP_WIZARD);
+        aggressor.setMaximumHp(aggressor.getHp());
+    }
+
+    /**
+     * @param hero
+     */
+    @Override
+    public void chooseStrategy (final Hero hero) {
+        if (hero.getHp() <= 0) {
+            return;
+        } else if (hero.getHp() < WizardConstants.HP_LIMIT_LOW_FACTOR * hero.getMaximumHp()) {
+            WizardLowStrategy.getInstance().wizardStrategy((Wizard) hero);
+        } else if (hero.getHp() < WizardConstants.HP_LIMIT_HIGH_FACTOR * hero.getMaximumHp()) {
+            WizardHighStrategy.getInstance().wizardStrategy((Wizard) hero);
+        }
     }
 }

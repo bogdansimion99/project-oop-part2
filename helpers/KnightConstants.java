@@ -1,6 +1,8 @@
 package helpers;
 
 public final class KnightConstants {
+    private KnightConstants() {
+    }
     public static final int BASE_DAMAGE_EXECUTE = 200;
     public static final int ADDED_DAMAGE_EXECUTE = 30;
     public static final int BASE_DAMAGE_SLAM = 100;
@@ -13,7 +15,6 @@ public final class KnightConstants {
     public static final float MODIFICATORS_SUBTRACTED = -0.2f;
     public static final float HP_ADDED_FACTOR = 5 / 4;
     public static final float HP_SUBTRACTED_FACTOR = 4 / 5;
-
-    private KnightConstants() {
-    }
+    public static final float HP_LIMIT_LOW_FACTOR = 1 / 3;
+    public static final float HP_LIMIT_HIGH_FACTOR = 1 / 2;
 }

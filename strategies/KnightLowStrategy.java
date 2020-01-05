@@ -4,7 +4,14 @@ import helpers.KnightConstants;
 import heroes.Knight;
 
 public class KnightLowStrategy implements KnightStrategy {
+    private static KnightLowStrategy instance = null;
 
+    public static KnightLowStrategy getInstance() {
+        if (instance == null) {
+            instance = new KnightLowStrategy();
+        }
+        return instance;
+    }
     /**
      * @param knight
      */

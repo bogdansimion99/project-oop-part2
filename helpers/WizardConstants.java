@@ -12,4 +12,6 @@ public final class WizardConstants {
     public static final float MODIFICATORS_SUBTRACTED = -0.2f;
     public static final float HP_ADDED_FACTOR = 11 / 10;
     public static final float HP_SUBTRACTED_FACTOR = 4 / 5;
+    public static final float HP_LIMIT_LOW_FACTOR = 1 / 4;
+    public static final float HP_LIMIT_HIGH_FACTOR = 1 / 2;
 }

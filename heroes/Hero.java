@@ -220,4 +220,11 @@ public class Hero {
     public void calculateHp(final Hero aggressor) {
 
     }
+
+    /**
+     * @param hero
+     */
+    public void chooseStrategy (final Hero hero) {
+
+    }
 }

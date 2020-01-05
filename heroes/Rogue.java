@@ -1,11 +1,9 @@
 package heroes;
 
-import helpers.GeneralConstants;
-import helpers.Modificator;
-import helpers.ModificatorVisitor;
-import helpers.RogueConstants;
-import helpers.Append;
+import helpers.*;
 import maps.Map;
+import strategies.RogueHighStrategy;
+import strategies.RogueLowStrategy;
 
 public class Rogue extends Hero implements Modificator {
     private Hero rogue;
@@ -98,6 +96,7 @@ public class Rogue extends Hero implements Modificator {
         ((Rogue) aggressor).critical++;
         if (area.getType().equals("Woods")) {
             hp = hp * GeneralConstants.WOODS_MODIFICATOR;
+            hp = Math.round(hp);
         }
         if (victim.getType().equals("Wizard")) {
             ((Wizard) victim).setDamage(((Wizard) victim).getDamage() + Math.round(hp));
@@ -105,7 +104,7 @@ public class Rogue extends Hero implements Modificator {
         float[] modificators = {Constants.MODIFICATOR_BACKSTAB, Knight.Constants.
                 MODIFICATOR_BACKSTAB, Pyromancer.Constants.MODIFICATOR_BACKSTAB, Wizard.Constants.
                 MODIFICATOR_BACKSTAB};
-        hp = hp * victim.accept(new Append(), modificators);
+        hp = hp * victim.accept(new Append(), modificators) * (1 + aggressor.getModificators());
         victim.setHp(victim.getHp() - Math.round(hp));
     }
 
@@ -119,6 +118,7 @@ public class Rogue extends Hero implements Modificator {
                 * aggressor.getLevel();
         if (area.getType().equals("Woods")) {
             hp = hp * GeneralConstants.WOODS_MODIFICATOR;
+            hp = Math.round(hp);
             victim.setOvertime(RogueConstants.OVERTIME_PARALYSIS_WOODS);
         }
         victim.setOvertime(RogueConstants.OVERTIME_PARALYSIS);
@@ -128,7 +128,7 @@ public class Rogue extends Hero implements Modificator {
         float[] modificators = {Constants.MODIFICATOR_PARALYSIS, Knight.Constants.
                 MODIFICATOR_PARALYSIS, Pyromancer.Constants.MODIFICATOR_PARALYSIS, Wizard.Constants.
                 MODIFICATOR_PARALYSIS};
-        hp = hp * victim.accept(new Append(), modificators);
+        hp = hp * victim.accept(new Append(), modificators) * (1 + aggressor.getModificators());
         victim.setHp(victim.getHp() - Math.round(hp));
         victim.setDamageOvertime(Math.round(hp));
     }
@@ -159,7 +159,20 @@ public class Rogue extends Hero implements Modificator {
     public void calculateHp(final Hero aggressor) {
         aggressor.setHp(GeneralConstants.INITIAL_HP_ROGUE + aggressor.getLevel()
                 * GeneralConstants.ADDED_HP_ROGUE);
-        aggressor.setMaximumHp(GeneralConstants.INITIAL_HP_ROGUE + aggressor.getLevel()
-                * GeneralConstants.ADDED_HP_ROGUE);
+        aggressor.setMaximumHp(aggressor.getHp());
+    }
+
+    /**
+     * @param hero
+     */
+    @Override
+    public void chooseStrategy (final Hero hero) {
+        if (hero.getHp() <= 0) {
+            return;
+        } else if (hero.getHp() < RogueConstants.HP_LIMIT_LOW_FACTOR * hero.getMaximumHp()) {
+            RogueLowStrategy.getInstance().rogueStrategy((Rogue) hero);
+        } else if (hero.getHp() < RogueConstants.HP_LIMIT_HIGH_FACTOR * hero.getMaximumHp()) {
+            RogueHighStrategy.getInstance().rogueStrategy((Rogue) hero);
+        }
     }
 }

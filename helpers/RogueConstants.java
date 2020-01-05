@@ -14,4 +14,6 @@ public final class RogueConstants {
     public static final float MODIFICATORS_SUBTRACTED = -0.1f;
     public static final float HP_ADDED_FACTOR = 3 / 2;
     public static final float HP_SUBTRACTED_FACTOR = 6 / 7;
+    public static final float HP_LIMIT_LOW_FACTOR = 1 / 7;
+    public static final float HP_LIMIT_HIGH_FACTOR = 1 / 5;
 }

@@ -4,6 +4,14 @@ import helpers.PyromancerConstants;
 import heroes.Pyromancer;
 
 public class PyromancerHighStrategy implements PyromancerStrategy {
+    private static PyromancerHighStrategy instance = null;
+
+    public static PyromancerHighStrategy getInstance() {
+        if (instance == null) {
+            instance = new PyromancerHighStrategy();
+        }
+        return instance;
+    }
     /**
      * @param pyromancer
      */
