@@ -1,6 +1,8 @@
 package helpers;
 
 public final class GeneralConstants {
+    private GeneralConstants() {
+    }
     public static final float VOLCANIC_MODIFICATOR = 1.25f;
     public static final float DESERT_MODIFICATOR = 1.1f;
     public static final float LAND_MODIFICATOR = 1.15f;

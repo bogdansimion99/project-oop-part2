@@ -3,15 +3,21 @@ package angels;
 public class GoodBoy extends Angel {
     private Angel goodBoy;
 
+    /**
+     * @return
+     */
     public Angel getGoodBoy() {
         return goodBoy;
     }
 
-    public void setGoodBoy(Angel goodBoy) {
+    /**
+     * @param goodBoy
+     */
+    public void setGoodBoy(final Angel goodBoy) {
         this.goodBoy = goodBoy;
     }
 
-    public GoodBoy(int[] position, Angel goodBoy) {
+    public GoodBoy(final int[] position, final Angel goodBoy) {
         super("GoodBoy", position);
         this.goodBoy = goodBoy;
     }

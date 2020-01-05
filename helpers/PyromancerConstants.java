@@ -1,6 +1,8 @@
 package helpers;
 
 public final class PyromancerConstants {
+    private PyromancerConstants() {
+    }
     public static final int BASE_DAMAGE_FIREBLAST = 300;
     public static final int ADDED_DAMAGE_FIREBLAST = 50;
     public static final int BASE_DAMAGE_IGNITE = 150;

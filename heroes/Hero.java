@@ -129,11 +129,17 @@ public class Hero {
         this.type = type;
     }
 
+    /**
+     * @return
+     */
     public float getModificators() {
         return modificators;
     }
 
-    public void setModificators(float modificators) {
+    /**
+     * @param modificators
+     */
+    public void setModificators(final float modificators) {
         this.modificators = modificators;
     }
 
@@ -173,6 +179,11 @@ public class Hero {
         }
     }
 
+    /**
+     * @param aggressor
+     * @param victim
+     * @param area
+     */
     public void action(final Hero aggressor, final Hero victim, final Map area) {
 
     }
@@ -186,6 +197,19 @@ public class Hero {
         return 0.0f;
     }
 
+    /**
+     * @param modificatorVisitor
+     * @param hp
+     * @return
+     */
+    public float accept(final ModificatorVisitor modificatorVisitor, final int[] hp) {
+        return 0;
+    }
+
+    /**
+     * @param aggressor
+     * @param victim
+     */
     public void calculateXp(final Hero aggressor, final Hero victim) {
 
     }

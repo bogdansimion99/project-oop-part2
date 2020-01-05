@@ -1,6 +1,10 @@
 package heroes;
 
-import helpers.*;
+import helpers.GeneralConstants;
+import helpers.Modificator;
+import helpers.ModificatorVisitor;
+import helpers.PyromancerConstants;
+import helpers.Append;
 import maps.Map;
 
 public class Pyromancer extends Hero implements Modificator {
@@ -38,6 +42,16 @@ public class Pyromancer extends Hero implements Modificator {
     @Override
     public float accept(final ModificatorVisitor modificatorVisitor, final float[] modificators) {
         return modificatorVisitor.visit(this, modificators);
+    }
+
+    /**
+     * @param modificatorVisitor
+     * @param hp
+     * @return
+     */
+    @Override
+    public float accept(final ModificatorVisitor modificatorVisitor, final int[] hp) {
+        return modificatorVisitor.visit(this, hp);
     }
 
     /**

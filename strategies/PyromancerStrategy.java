@@ -3,5 +3,5 @@ package strategies;
 import heroes.Pyromancer;
 
 public interface PyromancerStrategy {
-    void pyromancerStrategy(final Pyromancer pyromancer);
+    void pyromancerStrategy(Pyromancer pyromancer);
 }

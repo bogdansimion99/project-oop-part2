@@ -3,15 +3,21 @@ package angels;
 public class XPAngel extends Angel {
     private Angel xpAngel;
 
+    /**
+     * @return
+     */
     public Angel getXpAngel() {
         return xpAngel;
     }
 
-    public void setXpAngel(Angel xpAngel) {
+    /**
+     * @param xpAngel
+     */
+    public void setXpAngel(final Angel xpAngel) {
         this.xpAngel = xpAngel;
     }
 
-    public XPAngel(int[] position, Angel xpAngel) {
+    public XPAngel(final int[] position, final Angel xpAngel) {
         super("XPAngel", position);
         this.xpAngel = xpAngel;
     }

@@ -57,6 +57,16 @@ public class Wizard extends Hero implements Modificator {
     }
 
     /**
+     * @param modificatorVisitor
+     * @param hp
+     * @return
+     */
+    @Override
+    public float accept(final ModificatorVisitor modificatorVisitor, final int[] hp) {
+        return modificatorVisitor.visit(this, hp);
+    }
+
+    /**
      * @param aggressor cel care da damage
      * @param victim cel care isi ia damage
      * @param area terenul pe care se desfasoara jocul

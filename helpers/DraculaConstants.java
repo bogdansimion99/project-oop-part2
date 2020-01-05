@@ -1,6 +1,7 @@
 package helpers;
 
 public final class DraculaConstants {
+    private DraculaConstants() { }
     public static final float MODIFICATOR_KNIGHT = -0.2f;
     public static final int HP_KNIGHT = -60;
     public static final float MODIFICATOR_PYROMANCER = -0.3f;

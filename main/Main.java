@@ -1,5 +1,6 @@
 package main;
 
+import angels.*;
 import fileio.FileSystem;
 import heroes.*;
 import maps.*;
@@ -8,9 +9,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Main {
+public final class Main {
+
+    private Main() {
+    }
 
     public static void main(final String[] args) throws IOException {
+        /*FileSystem fs = new FileSystem("F://Documente_Bogdan//Facultate//POO//tema2//teme-master/" +
+                "/teme//proiect-etapa2-league-of-oop//checker//checker//resources//in//fightKKD.in",
+                "F://Documente_Bogdan//Facultate//POO//tema2//teme-master//teme//" +
+                        "proiect-etapa2-league-of-oop//checker//test.out");*/
         FileSystem fs = new FileSystem(args[0], args[1]);
         int rows = fs.nextInt();
         int columns = fs.nextInt();
@@ -68,6 +76,10 @@ public class Main {
             moves[i] = fs.nextWord();
         }
         for (int i = 0; i < noRounds; i++) {
+            fs.writeWord("~~ Round ");
+            fs.writeInt(i + 1);
+            fs.writeWord(" ~~");
+            fs.writeNewLine();
             for (int j = 0; j < noHeroes; j++) {
                 if (heroes.get(j).getHp() <= 0) {
                     continue;
@@ -96,9 +108,80 @@ public class Main {
             }
             int noAngels = fs.nextInt();
             if (noAngels != 0) {
-                String angelType = fs.nextWord();
-                int[] angelPosition = new int[] {fs.nextInt(), fs.nextInt()};
+                String aux = fs.nextWord();
+                int[] angelPosition = new int[2];
+                angelPosition[1] = aux.charAt(aux.length() - 1) - 48;
+                angelPosition[0] = aux.charAt(aux.length() - 3) - 48;
+                String angelType = aux.substring(0, aux.length() - 4);
+                fs.writeWord("Angel " + angelType + " was spawned at " + angelPosition[0] + " "
+                        + angelPosition[1]);
+                fs.writeNewLine();
+                ArrayList<Angel> angels = new ArrayList<>();
+                for (int j = 0; j < noAngels; j++) {
+                    Angel angel;
+                    switch (angelType) {
+                        case "DamageAngel":
+                            angel = new DamageAngel(angelPosition, new Angel());
+                            angels.add(angel);
+                            break;
+                        case "DarkAngel":
+                            angel = new DarkAngel(angelPosition, new Angel());
+                            angels.add(angel);
+                            break;
+                        case "Dracula":
+                            angel = new Dracula(angelPosition, new Angel());
+                            angels.add(angel);
+                            break;
+                        case "GoodBoy":
+                            angel = new GoodBoy(angelPosition, new Angel());
+                            angels.add(angel);
+                            break;
+                        case "LevelUpAngel":
+                            angel = new LevelUpAngel(angelPosition, new Angel());
+                            angels.add(angel);
+                            break;
+                        case "LifeGiver":
+                            angel = new LifeGiver(angelPosition, new Angel());
+                            angels.add(angel);
+                            break;
+                        case "SmallAngel":
+                            angel = new SmallAngel(angelPosition, new Angel());
+                            angels.add(angel);
+                            break;
+                        case "Spawner":
+                            angel = new Spawner(angelPosition, new Angel());
+                            angels.add(angel);
+                            break;
+                        case "XPAngel":
+                            angel = new XPAngel(angelPosition, new Angel());
+                            angels.add(angel);
+                            break;
+                        case "TheDoomer":
+                            angel = new TheDoomer(angelPosition, new Angel());
+                            angels.add(angel);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                for (int j = 0; j < noAngels; j++) {
+                    for (int k = 0; k < noHeroes; k++) {
+                        if (Arrays.equals(angels.get(j).getPosition(), heroes.get(k).
+                                getPosition())) {
+                            angels.get(j).action(heroes.get(k));
+                            fs.writeWord(angels.get(j).getType() + " " + angels.get(j).message()
+                                    + " " + heroes.get(k).getType() + " " + k);
+                            fs.writeNewLine();
+                            if (heroes.get(k).getHp() == 0) {
+                                fs.writeWord("Player " + heroes.get(k).getType() + " " + k
+                                        + " was killed by an angel");
+                                fs.writeNewLine();
+                            }
+                        }
+                    }
+                }
             }
+
             for (int j = 0; j < noHeroes; j++) {
                 switch (moves[i].charAt(j)) {
                     case 'U':
@@ -129,7 +212,10 @@ public class Main {
                         break;
                 }
             }
+            fs.writeNewLine();
         }
+        fs.writeWord("~~ Results ~~");
+        fs.writeNewLine();
         for (Hero x: heroes) {
             switch (x.getType()) {
                 case "Pyromancer":

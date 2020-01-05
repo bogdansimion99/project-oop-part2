@@ -1,6 +1,8 @@
 package helpers;
 
 public final class LevelUpAngelConstants {
+    private LevelUpAngelConstants() {
+    }
     public static final float MODIFICATOR_KNIGHT = 0.1f;
     public static final float MODIFICATOR_PYROMANCER = 0.2f;
     public static final float MODIFICATOR_ROGUE = 0.15f;

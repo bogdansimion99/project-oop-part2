@@ -1,6 +1,8 @@
 package helpers;
 
-public class SmallAngelConstants {
+public final class SmallAngelConstants {
+    private SmallAngelConstants() {
+    }
     public static final float MODIFICATOR_KNIGHT = 0.1f;
     public static final int HP_KNIGHT = 10;
     public static final float MODIFICATOR_PYROMANCER = 0.15f;

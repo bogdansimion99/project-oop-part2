@@ -1,6 +1,10 @@
 package heroes;
 
-import helpers.*;
+import helpers.GeneralConstants;
+import helpers.KnightConstants;
+import helpers.Modificator;
+import helpers.ModificatorVisitor;
+import helpers.Append;
 import maps.Map;
 
 public class Knight extends Hero implements Modificator {
@@ -41,11 +45,21 @@ public class Knight extends Hero implements Modificator {
     }
 
     /**
+     * @param modificatorVisitor
+     * @param hp
+     * @return
+     */
+    @Override
+    public float accept(final ModificatorVisitor modificatorVisitor, final int[] hp) {
+        return modificatorVisitor.visit(this, hp);
+    }
+
+    /**
      * @param aggressor cel care da damage
      * @param victim cel care isi ia damage
      * @param area terenul pe care se desfasoara jocul
      * Aceasta metoda apeleaza metodele specifice jucatorului de tip Knight.
-     * La final se calculeaza xp-ul aggresorului (cel care da damage).
+     * La final se calculeaza xp-ul agresorului (cel care da damage).
      */
     @Override
     public void action(final Hero aggressor, final Hero victim, final Map area) {

@@ -3,15 +3,21 @@ package angels;
 public class LifeGiver extends Angel {
     private Angel lifeGiver;
 
+    /**
+     * @return
+     */
     public Angel getLifeGiver() {
         return lifeGiver;
     }
 
-    public void setLifeGiver(Angel lifeGiver) {
+    /**
+     * @param lifeGiver
+     */
+    public void setLifeGiver(final Angel lifeGiver) {
         this.lifeGiver = lifeGiver;
     }
 
-    public LifeGiver(int[] position, Angel lifeGiver) {
+    public LifeGiver(final int[] position, final Angel lifeGiver) {
         super("LifeGiver", position);
         this.lifeGiver = lifeGiver;
     }

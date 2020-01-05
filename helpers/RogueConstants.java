@@ -1,6 +1,8 @@
 package helpers;
 
 public final class RogueConstants {
+    private RogueConstants() {
+    }
     public static final int INITIAL_DAMAGE_BACKSTAB = 200;
     public static final int ADDED_DAMAGE_BACKSTAB = 20;
     public static final float CRITICAL = 1.5f;

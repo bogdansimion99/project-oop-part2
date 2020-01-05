@@ -13,4 +13,7 @@ public final class KnightConstants {
     public static final float MODIFICATORS_SUBTRACTED = -0.2f;
     public static final float HP_ADDED_FACTOR = 5 / 4;
     public static final float HP_SUBTRACTED_FACTOR = 4 / 5;
+
+    private KnightConstants() {
+    }
 }

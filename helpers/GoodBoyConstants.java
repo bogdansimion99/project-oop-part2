@@ -1,6 +1,8 @@
 package helpers;
 
 public final class GoodBoyConstants {
+    private GoodBoyConstants() {
+    }
     public static final float MODIFICATOR_KNIGHT = 0.4f;
     public static final int HP_KNIGHT = 20;
     public static final float MODIFICATOR_PYROMANCER = 0.5f;
