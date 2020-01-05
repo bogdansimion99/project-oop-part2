@@ -52,41 +52,41 @@ public class Append implements ModificatorVisitor {
 
     /**
      * @param pyromancer
-     * @param hp
+     * @param hps
      * @return
      */
     @Override
-    public float visit(final Pyromancer pyromancer, final int[] hp) {
-        return 0;
+    public int visit(final Pyromancer pyromancer, final int[] hps) {
+        return hps[2];
     }
 
     /**
      * @param knight
-     * @param hp
+     * @param hps
      * @return
      */
     @Override
-    public float visit(final Knight knight, final int[] hp) {
-        return 0;
+    public int visit(final Knight knight, final int[] hps) {
+        return hps[1];
     }
 
     /**
      * @param rogue
-     * @param hp
+     * @param hps
      * @return
      */
     @Override
-    public float visit(final Rogue rogue, final int[] hp) {
-        return 0;
+    public int visit(final Rogue rogue, final int[] hps) {
+        return hps[0];
     }
 
     /**
      * @param wizard
-     * @param hp
+     * @param hps
      * @return
      */
     @Override
-    public float visit(final Wizard wizard, final int[] hp) {
-        return 0;
+    public int visit(final Wizard wizard, final int[] hps) {
+        return hps[3];
     }
 }

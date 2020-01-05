@@ -11,8 +11,8 @@ public interface ModificatorVisitor {
     float visit(Rogue rogue, float[] modificators);
     float visit(Wizard wizard, float[] modificators);
 
-    float visit(Knight knight, int[] hp);
-    float visit(Pyromancer pyromancer, int[] hp);
-    float visit(Rogue rogue, int[] hp);
-    float visit(Wizard wizard, int[] hp);
+    int visit(Knight knight, int[] hp);
+    int visit(Pyromancer pyromancer, int[] hp);
+    int visit(Rogue rogue, int[] hp);
+    int visit(Wizard wizard, int[] hp);
 }

@@ -31,10 +31,12 @@ public class DamageAngel extends Angel {
      */
     @Override
     public void action(final Hero hero) {
-        float[] modificators = {DamageAngelConstants.MODIFICATOR_ROGUE, DamageAngelConstants.
-                MODIFICATOR_KNIGHT, DamageAngelConstants.MODIFICATOR_PYROMANCER,
-                DamageAngelConstants.MODIFICATOR_WIZARD};
-        hero.setModificators(hero.getModificators() + hero.accept(new Append(), modificators));
+        if (hero.getHp() > 0) {
+            float[] modificators = {DamageAngelConstants.MODIFICATOR_ROGUE, DamageAngelConstants.
+                    MODIFICATOR_KNIGHT, DamageAngelConstants.MODIFICATOR_PYROMANCER,
+                    DamageAngelConstants.MODIFICATOR_WIZARD};
+            hero.setModificators(hero.getModificators() + hero.accept(new Append(), modificators));
+        }
     }
 
     /**

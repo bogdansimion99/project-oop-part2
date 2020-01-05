@@ -16,7 +16,7 @@ public final class Main {
 
     public static void main(final String[] args) throws IOException {
         /*FileSystem fs = new FileSystem("F://Documente_Bogdan//Facultate//POO//tema2//teme-master/" +
-                "/teme//proiect-etapa2-league-of-oop//checker//checker//resources//in//fightKKD.in",
+                "/teme//proiect-etapa2-league-of-oop//checker//checker//resources//in//fightKRD.in",
                 "F://Documente_Bogdan//Facultate//POO//tema2//teme-master//teme//" +
                         "proiect-etapa2-league-of-oop//checker//test.out");*/
         FileSystem fs = new FileSystem(args[0], args[1]);
@@ -108,16 +108,16 @@ public final class Main {
             }
             int noAngels = fs.nextInt();
             if (noAngels != 0) {
-                String aux = fs.nextWord();
-                int[] angelPosition = new int[2];
-                angelPosition[1] = aux.charAt(aux.length() - 1) - 48;
-                angelPosition[0] = aux.charAt(aux.length() - 3) - 48;
-                String angelType = aux.substring(0, aux.length() - 4);
-                fs.writeWord("Angel " + angelType + " was spawned at " + angelPosition[0] + " "
-                        + angelPosition[1]);
-                fs.writeNewLine();
                 ArrayList<Angel> angels = new ArrayList<>();
                 for (int j = 0; j < noAngels; j++) {
+                    String aux = fs.nextWord();
+                    int[] angelPosition = new int[2];
+                    angelPosition[1] = aux.charAt(aux.length() - 1) - 48;
+                    angelPosition[0] = aux.charAt(aux.length() - 3) - 48;
+                    String angelType = aux.substring(0, aux.length() - 4);
+                    fs.writeWord("Angel " + angelType + " was spawned at " + angelPosition[0] + " "
+                            + angelPosition[1]);
+                    fs.writeNewLine();
                     Angel angel;
                     switch (angelType) {
                         case "DamageAngel":
@@ -163,19 +163,22 @@ public final class Main {
                         default:
                             break;
                     }
-                }
-                for (int j = 0; j < noAngels; j++) {
                     for (int k = 0; k < noHeroes; k++) {
                         if (Arrays.equals(angels.get(j).getPosition(), heroes.get(k).
                                 getPosition())) {
+                            int hp = heroes.get(k).getHp();
                             angels.get(j).action(heroes.get(k));
                             fs.writeWord(angels.get(j).getType() + " " + angels.get(j).message()
                                     + " " + heroes.get(k).getType() + " " + k);
                             fs.writeNewLine();
-                            if (heroes.get(k).getHp() == 0) {
+                            if (heroes.get(k).getHp() == 0 && heroes.get(k).getHp() != hp) {
                                 fs.writeWord("Player " + heroes.get(k).getType() + " " + k
                                         + " was killed by an angel");
                                 fs.writeNewLine();
+                            }
+                            if (heroes.get(k).getHp() > 0 && hp == 0) {
+                                fs.writeWord("Player " + heroes.get(k).getType() + " " + k
+                                        + " was brought to life by an angel");
                             }
                         }
                     }

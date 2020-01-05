@@ -174,7 +174,7 @@ public class Hero {
         if (player.xp < GeneralConstants.LIMIT_LEVEL1) {
             player.level = 0;
         } else {
-            player.level = (player.hp - GeneralConstants.LIMIT_LEVEL0) / GeneralConstants.
+            player.level = (player.xp - GeneralConstants.LIMIT_LEVEL0) / GeneralConstants.
                     LIMIT_LEVEL_UPGRADE;
         }
     }
@@ -202,7 +202,7 @@ public class Hero {
      * @param hp
      * @return
      */
-    public float accept(final ModificatorVisitor modificatorVisitor, final int[] hp) {
+    public int accept(final ModificatorVisitor modificatorVisitor, final int[] hp) {
         return 0;
     }
 
@@ -211,6 +211,13 @@ public class Hero {
      * @param victim
      */
     public void calculateXp(final Hero aggressor, final Hero victim) {
+
+    }
+
+    /**
+     * @param aggressor
+     */
+    public void calculateHp(final Hero aggressor) {
 
     }
 }

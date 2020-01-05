@@ -34,8 +34,17 @@ public class DarkAngel extends Angel {
      * @param hero
      */
     public void action(final Hero hero) {
-        int[] hps = {DarkAngelConstants.HP_ROGUE, DarkAngelConstants.HP_KNIGHT, DarkAngelConstants
-                .HP_PYROMANCER, DarkAngelConstants.HP_WIZARD};
-        hero.setModificators(hero.getModificators() + hero.accept(new Append(), hps));
+        if (hero.getHp() > 0) {
+            int[] hps = {DarkAngelConstants.HP_ROGUE, DarkAngelConstants.HP_KNIGHT,
+                    DarkAngelConstants.HP_PYROMANCER, DarkAngelConstants.HP_WIZARD};
+            hero.setHp(hero.getHp() + hero.accept(new Append(), hps));
+        }
+    }
+
+    /**
+     * @return
+     */
+    public String message() {
+        return "hit";
     }
 }

@@ -20,4 +20,6 @@ public final class GeneralConstants {
     public static final int LIMIT_LEVEL_UPGRADE = 50;
     public static final int STANDARD_ADDED_XP = 200;
     public static final int MODIFIED_ADDED_XP = 40;
+    public static final int LEVEL_UP_BY_100 = 100;
+    public static final int LEVEL_UP_BY_50 = 50;
 }

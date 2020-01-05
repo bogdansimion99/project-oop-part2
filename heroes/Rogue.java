@@ -66,7 +66,7 @@ public class Rogue extends Hero implements Modificator {
      * @return
      */
     @Override
-    public float accept(final ModificatorVisitor modificatorVisitor, final int[] hp) {
+    public int accept(final ModificatorVisitor modificatorVisitor, final int[] hp) {
         return modificatorVisitor.visit(this, hp);
     }
 
@@ -148,11 +148,18 @@ public class Rogue extends Hero implements Modificator {
             int level = aggressor.getLevel();
             levelUp(aggressor);
             if (aggressor.getLevel() != level) {
-                aggressor.setHp(GeneralConstants.INITIAL_HP_ROGUE + aggressor.getLevel()
-                        * GeneralConstants.ADDED_HP_ROGUE);
-                aggressor.setMaximumHp(GeneralConstants.INITIAL_HP_ROGUE + aggressor.getLevel()
-                        * GeneralConstants.ADDED_HP_ROGUE);
+                aggressor.calculateHp(aggressor);
             }
         }
+    }
+
+    /**
+     * @param aggressor
+     */
+    public void calculateHp(final Hero aggressor) {
+        aggressor.setHp(GeneralConstants.INITIAL_HP_ROGUE + aggressor.getLevel()
+                * GeneralConstants.ADDED_HP_ROGUE);
+        aggressor.setMaximumHp(GeneralConstants.INITIAL_HP_ROGUE + aggressor.getLevel()
+                * GeneralConstants.ADDED_HP_ROGUE);
     }
 }

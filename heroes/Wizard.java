@@ -62,7 +62,7 @@ public class Wizard extends Hero implements Modificator {
      * @return
      */
     @Override
-    public float accept(final ModificatorVisitor modificatorVisitor, final int[] hp) {
+    public int accept(final ModificatorVisitor modificatorVisitor, final int[] hp) {
         return modificatorVisitor.visit(this, hp);
     }
 
@@ -137,11 +137,19 @@ public class Wizard extends Hero implements Modificator {
             int level = aggressor.getLevel();
             levelUp(aggressor);
             if (aggressor.getLevel() != level) {
-                aggressor.setHp(GeneralConstants.INITIAL_HP_WIZARD + aggressor.getLevel()
-                        * GeneralConstants.ADDED_HP_WIZARD);
-                aggressor.setMaximumHp(GeneralConstants.INITIAL_HP_WIZARD + aggressor.getLevel()
-                        * GeneralConstants.ADDED_HP_WIZARD);
+                aggressor.calculateHp(aggressor);
             }
         }
+    }
+
+    /**
+     * @param aggressor
+     */
+    @Override
+    public void calculateHp(final Hero aggressor) {
+        aggressor.setHp(GeneralConstants.INITIAL_HP_WIZARD + aggressor.getLevel()
+                * GeneralConstants.ADDED_HP_WIZARD);
+        aggressor.setMaximumHp(GeneralConstants.INITIAL_HP_WIZARD + aggressor.getLevel()
+                * GeneralConstants.ADDED_HP_WIZARD);
     }
 }

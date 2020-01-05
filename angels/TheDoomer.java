@@ -28,7 +28,9 @@ public class TheDoomer extends Angel {
      * @param hero
      */
     public void action(final Hero hero) {
-        hero.setHp(0);
+        if (hero.getHp() > 0) {
+            hero.setHp(0);
+        }
     }
 
     /**
