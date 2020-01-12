@@ -224,7 +224,7 @@ public class Hero {
     /**
      * @param hero
      */
-    public void chooseStrategy (final Hero hero) {
+    public void chooseStrategy(final Hero hero) {
 
     }
 }

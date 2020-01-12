@@ -1,6 +1,10 @@
 package heroes;
 
-import helpers.*;
+import helpers.GeneralConstants;
+import helpers.Modificator;
+import helpers.ModificatorVisitor;
+import helpers.PyromancerConstants;
+import helpers.Append;
 import maps.Map;
 import strategies.PyromancerHighStrategy;
 import strategies.PyromancerLowStrategy;
@@ -147,7 +151,7 @@ public class Pyromancer extends Hero implements Modificator {
      * @param hero
      */
     @Override
-    public void chooseStrategy (final Hero hero) {
+    public void chooseStrategy(final Hero hero) {
         if (hero.getHp() <= 0) {
             return;
         } else if (hero.getHp() < PyromancerConstants.HP_LIMIT_LOW_FACTOR * hero.getMaximumHp()) {

@@ -169,7 +169,7 @@ public class Knight extends Hero implements Modificator {
      * @param hero
      */
     @Override
-    public void chooseStrategy (final Hero hero) {
+    public void chooseStrategy(final Hero hero) {
         if (hero.getHp() <= 0) {
             return;
         } else if (hero.getHp() < KnightConstants.HP_LIMIT_LOW_FACTOR * hero.getMaximumHp()) {

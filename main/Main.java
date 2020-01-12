@@ -1,9 +1,27 @@
 package main;
 
-import angels.*;
+import angels.Angel;
+import angels.DamageAngel;
+import angels.DarkAngel;
+import angels.Dracula;
+import angels.GoodBoy;
+import angels.LevelUpAngel;
+import angels.LifeGiver;
+import angels.SmallAngel;
+import angels.Spawner;
+import angels.TheDoomer;
+import angels.XPAngel;
 import fileio.FileSystem;
-import heroes.*;
-import maps.*;
+import heroes.Wizard;
+import heroes.Rogue;
+import heroes.Pyromancer;
+import heroes.Knight;
+import heroes.Hero;
+import maps.Desert;
+import maps.Land;
+import maps.Volcanic;
+import maps.Woods;
+import maps.Map;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,10 +33,6 @@ public final class Main {
     }
 
     public static void main(final String[] args) throws IOException {
-        /*FileSystem fs = new FileSystem("F://Documente_Bogdan//Facultate//POO//tema2//teme-master/" +
-                "/teme//proiect-etapa2-league-of-oop//checker//checker//resources//in//fightKRD.in",
-                "F://Documente_Bogdan//Facultate//POO//tema2//teme-master//teme//" +
-                        "proiect-etapa2-league-of-oop//checker//test.out");*/
         FileSystem fs = new FileSystem(args[0], args[1]);
         int rows = fs.nextInt();
         int columns = fs.nextInt();

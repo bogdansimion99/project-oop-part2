@@ -1,6 +1,10 @@
 package heroes;
 
-import helpers.*;
+import helpers.GeneralConstants;
+import helpers.Modificator;
+import helpers.ModificatorVisitor;
+import helpers.RogueConstants;
+import helpers.Append;
 import maps.Map;
 import strategies.RogueHighStrategy;
 import strategies.RogueLowStrategy;
@@ -166,7 +170,7 @@ public class Rogue extends Hero implements Modificator {
      * @param hero
      */
     @Override
-    public void chooseStrategy (final Hero hero) {
+    public void chooseStrategy(final Hero hero) {
         if (hero.getHp() <= 0) {
             return;
         } else if (hero.getHp() < RogueConstants.HP_LIMIT_LOW_FACTOR * hero.getMaximumHp()) {
